@@ -13,13 +13,19 @@ var frames = {
         frames.socket = new WebSocket(url);
         frames.socket.onmessage = function (event) {
             frames.show(JSON.parse(event.data));
-            var people = frames.get_num_people(JSON.parse(event.data));
+            
+            var frame = JSON.parse(event.data);
+            frames.show(frame);
+            var people = frames.get_num_people(frame);
             console.log(people);
+    
+            // Update the web page with the number of people detected
+            document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
         }
     },
-
+    
     show: function (frame) {
-        console.log(frame);
+        $('img.frame').attr("src", 'data:image/pnjpegg;base64,' + frame.src);
     },
 
     get_num_people: function (frame) {
