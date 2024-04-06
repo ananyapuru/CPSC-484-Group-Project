@@ -1,0 +1,131 @@
+
+:root {
+    font-family: 'Helvetica';
+    --Black: #000;
+    --White: #fff;
+    --Blue: #5297FF;
+    --Red: #DF0000;
+}
+
+
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.Content {
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #fff;
+    display: flex;
+    position: relative;
+    isolation: isolate;
+    align-items: flex-start;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+.ContentSection {
+    justify-content: center;
+    padding: 5% 10% 0 10%;
+    flex-direction: row;
+    display: flex;
+    position: relative;
+    isolation: isolate;
+    align-items: flex-start;
+    box-sizing: border-box;
+
+}
+
+.first {
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    padding-right: 5%;
+}
+
+.text-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.5s ease;
+}
+
+
+h1 {
+    /* Heading */
+    font: 800 3.2rem/1 'Helvetica';
+    letter-spacing: -.01rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 6.5rem;
+    font-weight: 400;
+    line-height: 7.5rem;
+    animation: floatIn 1s ease-in-out;
+
+}
+
+.hero{
+    font-size: 7rem;
+    line-height: 7.8rem;
+}
+
+h3 {
+    /* subtitle/large */
+    font: 800 3.2rem/1 'Helvetica';
+    font-weight: 400;
+    font-size: 4.5rem;
+    line-height: 5rem;
+    letter-spacing: -.01rem;
+    animation: floatIn 0.8s ease-in-out;
+
+}
+h6 {
+    font: 800 3.2rem/1 'Helvetica';
+    font-weight: 400;
+    font-size: 3rem;
+    line-height: 4rem;
+    letter-spacing: -.01rem;
+    animation: floatIn 0.8s ease-in-out;
+
+}
+
+p {
+    font: 800 3.2rem/1 'Helvetica';
+    color: $dark-grey;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.roundedbutton {
+    background-color: white;
+    color: $dark-grey;
+    border-radius: 10px; 
+    padding: 10px 20px;
+    border: 3px solid $dark-grey; 
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: $dark-grey;
+      color: white;
+      border: 3px solid $dark-grey;
+    }
+  }
+  
