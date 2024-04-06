@@ -13,11 +13,17 @@ var frames = {
         frames.socket = new WebSocket(url);
         frames.socket.onmessage = function (event) {
             frames.show(JSON.parse(event.data));
+            var people = frames.get_num_people(JSON.parse(event.data));
+            console.log(people);
         }
     },
 
     show: function (frame) {
         console.log(frame);
+    },
+
+    get_num_people: function (frame) {
+        return frame.people.length 
     }
 };
 
