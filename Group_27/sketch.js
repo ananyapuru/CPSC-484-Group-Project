@@ -1,7 +1,8 @@
 
 // Adapted from https://p5js.org/examples/interaction-snake-game.html
 //
-var host = "localhost:4444";
+// var host = "localhost:4444";
+var host = "http://cpsc484-03.stdusr.yale.internal:8888/";
 $(document).ready(function() {
   frames.start();
   twod.start();
