@@ -17,9 +17,11 @@ var frames = {
             var frame = JSON.parse(event.data);
             frames.show(frame);
             var people = frames.get_num_people(frame);
+            var rightHandRaised = frames.is_right_hand_raised(frame);
     
             // Update the web page with the number of people detected
             document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+            document.getElementById('rightHandRaised').innerText = "Right hand raised: " + rightHandRaised;
         }
     },
     
@@ -30,6 +32,15 @@ var frames = {
 
     get_num_people: function (frame) {
         return frame.people.length 
+    },
+
+    is_right_hand_raised: function (frame) {
+        console.log(frame.people[0].joints[15]);
+        // TODO: Nick add logic here!
+        if(frame.people[0].joints[15]){
+            return true;
+        }
+        return false;
     }
 };
 
