@@ -17,7 +17,7 @@ var frames = {
             frames.show(frame);
             var people = frames.get_num_people(frame);
             var rightHandRaised = frames.is_right_hand_raised(frame);
-            var leftHandRaised = frames.is_right_hand_raised(frame);
+            var leftHandRaised = frames.is_left_hand_raised(frame);
     
             // Update the web page with the number of people detected
             document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
