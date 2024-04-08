@@ -15,26 +15,62 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 var closestPerson = frames.get_closest_person(frames.lastFrame);
                 if (closestPerson) {
+                    var people = frames.get_num_people(frames.lastFrame);
                     var rightHandRaised = frames.is_right_hand_raised(closestPerson);
                     var leftHandRaised = frames.is_left_hand_raised(closestPerson);
-                    var people = frames.get_num_people(frames.lastFrame);
-                    
+
+                    if(people > 0){
+                        if(people > 1){
+                            document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
+                        }
+                        else {
+                            document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
+                        }
+                    }
+
                     document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
                     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
 
-                    console.log("window.location.pathname");
-                    if (window.location.pathname === '/') {
+                    if (window.location.pathname === '/Group_27/') {
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
                         } else if (rightHandRaised) {
-                            window.location.href = '/sitting.html';
+                            window.location.href = '/Group_27/sitting.html';
                         } else if (leftHandRaised) {
-                            window.location.href = '/standing.html';
+                            window.location.href = '/Group_27/standing.html';
                         } else {
                             // Clear the error message if no hands are raised
                             errorDisplay.innerText = "";
                         }
+                        // Collect x positions for specific joints and normalize relative to spine_naval
+                        var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
+                        var xPositions = jointIndices.map(function(index) {
+                            return closestPerson.joints[index].position.x;
+                        });
+
+                        // Get x position of spine_naval and ear_right
+                        var spineNavalX = closestPerson.joints[1].position.x;
+
+                        // Normalize x positions relative to spine_naval
+                        var normalizedXPositions = xPositions.map(function(x) {
+                            return x - spineNavalX;
+                        });
+
+                        // Calculate sum of squares of differences from a vertical line (spine_naval)
+                        var sumOfSquares = 0;
+                        for (var i = 0; i < normalizedXPositions.length; i++) {
+                            sumOfSquares += Math.pow(normalizedXPositions[i], 2);
+                        }
+
+                        // Log the result to console
+                        if (sumOfSquares > 1200) {
+                            console.log("Bad Posture Detected!: ", sumOfSquares);
+                        }
+                        else {
+                            console.log("Good Posture!: ", sumOfSquares);
+                        }
+                        // console.log("Sum of squares:", sumOfSquares);
                     }
                 }
             }
@@ -42,6 +78,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         show: function (frame) {
             $('img.frame').attr("src", 'data:image/png;base64,' + frame.src);
+        },
+
+        get_num_people: function (frame) {
+            return frame.people.length;
         },
 
         get_closest_person: function (frame) {
@@ -66,11 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
         is_left_hand_raised: function (person) {
             var chest_y = person.joints[2].position.y;
             return person.joints[8].position.y < chest_y;
-        },
-
-        get_num_people: function (frame) {
-            return frame.people.length;
-        },
+        }
     };
 
     frames.start();

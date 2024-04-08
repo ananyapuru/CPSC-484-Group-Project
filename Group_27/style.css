@@ -640,8 +640,14 @@ a span.rounded:hover {
 
 /* Additional Elements */
 #peopleCount, #leftHandRaised, #rightHandRaised {
-    font-size: 20px; /* Sizing for visibility */
+    font-size: 25px; /* Sizing for visibility */
     margin: 10px 0; /* Spacing */
+}
+
+#greeting {
+    font-size: 50px; /* Sizing for visibility */
+    margin: 10px 0; /* Spacing */
+    color: red,
 }
 
 .main-header h1 {
