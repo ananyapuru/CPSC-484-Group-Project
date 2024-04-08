@@ -42,8 +42,10 @@ var frames = {
         var chest_z = frame.people[0].joints[2].position.z;
 
         if(frame.people[0].joints[15].position.y < chest_y){
+            console.log("Right hand raised!");
             return true;
         }
+        console.log("NICK IS DOWN");
         return false;
     },
 
@@ -54,8 +56,10 @@ var frames = {
         var chest_z = frame.people[0].joints[2].position.z;
 
         if(frame.people[0].joints[8].position.y < chest_y){
+            console.log("Left hand raised!");
             return true;
         }
+        console.log("ANANYA IS DOWN");
         return false;
     }
 };
