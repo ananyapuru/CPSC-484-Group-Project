@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
 
                         // Log the result to console
-                        if (sumOfSquares > 1200) {
+                        if (sumOfSquares > 2000) {
                             console.log("Bad Posture Detected!: ", sumOfSquares);
                         }
                         else {
