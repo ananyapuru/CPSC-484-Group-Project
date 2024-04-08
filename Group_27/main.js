@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (closestPerson) {
                     var rightHandRaised = frames.is_right_hand_raised(closestPerson);
                     var leftHandRaised = frames.is_left_hand_raised(closestPerson);
-
+                    var people = frames.get_num_people(frames.lastFrame);
+                    
+                    document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
                     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
 
@@ -64,7 +66,11 @@ document.addEventListener("DOMContentLoaded", function() {
         is_left_hand_raised: function (person) {
             var chest_y = person.joints[2].position.y;
             return person.joints[8].position.y < chest_y;
-        }
+        },
+
+        get_num_people: function (frame) {
+            return frame.people.length;
+        },
     };
 
     frames.start();
