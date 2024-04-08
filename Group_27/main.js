@@ -21,13 +21,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
 
-                    if (window.location.pathname === '/Group_27/') {
+                    console.log("window.location.pathname");
+                    if (window.location.pathname === '/') {
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
                         } else if (rightHandRaised) {
-                            window.location.href = '/Group_27/sitting.html';
+                            window.location.href = '/sitting.html';
                         } else if (leftHandRaised) {
-                            window.location.href = '/Group_27/standing.html';
+                            window.location.href = '/standing.html';
                         } else {
                             // Clear the error message if no hands are raised
                             errorDisplay.innerText = "";
