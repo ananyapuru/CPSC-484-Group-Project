@@ -5,7 +5,6 @@ $(document).ready(function() {
   twod.start();
 });
 
-
 var frames = {
     socket: null,
 
@@ -26,7 +25,6 @@ var frames = {
     },
     
     show: function (frame) {
-        console.log("Frame = ", frame);
         $('img.frame').attr("src", 'data:image/pnjpegg;base64,' + frame.src);
     },
 
@@ -35,9 +33,13 @@ var frames = {
     },
 
     is_right_hand_raised: function (frame) {
-        console.log(frame.people[0].joints[15]);
+        console.log("Right hand info = ", frame.people[0].joints[15]);
         // TODO: Nick add logic here!
-        if(frame.people[0].joints[15]){
+        var chest_x = frame.people[0].joints[2].position.x;
+        var chest_y = frame.people[0].joints[2].position.y;
+        var chest_z = frame.people[0].joints[2].position.z;
+
+        if(frame.people[0].joints[15].position.y < chest_y){
             return true;
         }
         return false;
