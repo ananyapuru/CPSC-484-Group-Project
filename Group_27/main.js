@@ -1,86 +1,170 @@
-// python3 -m http.server 4444
-var host = "cpsc484-03.stdusr.yale.internal:8888";
-$(document).ready(function() {
-  frames.start();
-  twod.start();
+document.addEventListener("DOMContentLoaded", function() {
+    var host = "cpsc484-03.stdusr.yale.internal:8888";
+    var errorDisplay = document.getElementById('errorDisplay');
+
+    var frames = {
+        socket: null,
+        lastFrame: null,
+
+        start: function () {
+            var url = "ws://" + host + "/frames";
+            frames.socket = new WebSocket(url);
+            frames.socket.onmessage = function (event) {
+                frames.lastFrame = JSON.parse(event.data);
+                frames.show(frames.lastFrame);
+
+                var closestPerson = frames.get_closest_person(frames.lastFrame);
+                if (closestPerson) {
+                    var rightHandRaised = frames.is_right_hand_raised(closestPerson);
+                    var leftHandRaised = frames.is_left_hand_raised(closestPerson);
+
+                    document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
+                    document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
+
+                    if (window.location.pathname === '/Group_27/') {
+                        if (rightHandRaised && leftHandRaised) {
+                            errorDisplay.innerText = "Both hands are raised!";
+                        } else if (rightHandRaised) {
+                            window.location.href = '/Group_27/sitting.html';
+                        } else if (leftHandRaised) {
+                            window.location.href = '/Group_27/standing.html';
+                        } else {
+                            // Clear the error message if no hands are raised
+                            errorDisplay.innerText = "";
+                        }
+                    }
+                }
+            }
+        },
+
+        show: function (frame) {
+            $('img.frame').attr("src", 'data:image/png;base64,' + frame.src);
+        },
+
+        get_closest_person: function (frame) {
+            if (frame.people.length === 0) {
+                return null;
+            }
+            // Find the person with the lowest z position (closest to the camera)
+            var closestPerson = frame.people[0];
+            for (var i = 1; i < frame.people.length; i++) {
+                if (frame.people[i].joints[2].position.z < closestPerson.joints[2].position.z) {
+                    closestPerson = frame.people[i];
+                }
+            }
+            return closestPerson;
+        },
+
+        is_right_hand_raised: function (person) {
+            var chest_y = person.joints[2].position.y;
+            return person.joints[15].position.y < chest_y;
+        },
+
+        is_left_hand_raised: function (person) {
+            var chest_y = person.joints[2].position.y;
+            return person.joints[8].position.y < chest_y;
+        }
+    };
+
+    frames.start();
+
+    var twod = {
+        socket: null,
+
+        start: function () {
+            var url = "ws://" + host + "/twod";
+            twod.socket = new WebSocket(url);
+            twod.socket.onmessage = function (event) {
+                twod.show(JSON.parse(event.data));
+            }
+        },
+
+        show: function (twod) {
+            $('img.twod').attr("src", 'data:image/png;base64,' + twod.src);
+        }
+    };
+
+    twod.start();
 });
 
-var frames = {
-    socket: null,
 
-    start: function () {
-        var url = "ws://" + host + "/frames";
-        frames.socket = new WebSocket(url);
-        frames.socket.onmessage = function (event) {
-            frames.show(JSON.parse(event.data));
-            var frame = JSON.parse(event.data);
-            frames.show(frame);
-            var people = frames.get_num_people(frame);
-            var rightHandRaised = frames.is_right_hand_raised(frame);
-            var leftHandRaised = frames.is_left_hand_raised(frame);
+// // Ensure DOM content is fully loaded before executing the script
+// document.addEventListener("DOMContentLoaded", function() {
+//     var host = "cpsc484-03.stdusr.yale.internal:8888";
     
-            // Update the web page with the number of people detected
-            document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
-            document.getElementById('rightHandRaised').innerText = "Right hand raised: " + rightHandRaised;
-            document.getElementById('leftHandRaised').innerText = "Left hand raised: " + leftHandRaised;
-        }
-    },
-    
-    show: function (frame) {
-        $('img.frame').attr("src", 'data:image/pnjpegg;base64,' + frame.src);
-    },
+//     // WebSocket connections for frame and 2D data
+//     var frames = {
+//         socket: null,
+//         lastFrame: null, // Store the last received frame data
 
-    get_num_people: function (frame) {
-        return frame.people.length 
-    },
+//         start: function () {
+//             var url = "ws://" + host + "/frames";
+//             frames.socket = new WebSocket(url);
+//             frames.socket.onmessage = function (event) {
+//                 frames.lastFrame = JSON.parse(event.data); // Update lastFrame data
+//                 frames.show(frames.lastFrame);
 
-    is_right_hand_raised: function (frame) {
-        console.log("Right hand info = ", frame.people[0].joints[15]);
-        // TODO: Nick add logic here!
-        var chest_x = frame.people[0].joints[2].position.x;
-        var chest_y = frame.people[0].joints[2].position.y;
-        var chest_z = frame.people[0].joints[2].position.z;
+//                 // Update web page with people count and hand raise status
+//                 var people = frames.get_num_people(frames.lastFrame);
+//                 var rightHandRaised = frames.is_right_hand_raised(frames.lastFrame);
+//                 var leftHandRaised = frames.is_left_hand_raised(frames.lastFrame);
 
-        if(frame.people[0].joints[15].position.y < chest_y){
-            console.log("Right hand raised!");
-            return true;
-        }
-        console.log("NICK IS DOWN");
-        return false;
-    },
+//                 document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+//                 document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
+//                 document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
 
-    is_left_hand_raised: function (frame) {
-        // TODO: Nick add logic here!
-        var chest_x = frame.people[0].joints[2].position.x;
-        var chest_y = frame.people[0].joints[2].position.y;
-        var chest_z = frame.people[0].joints[2].position.z;
+//                 // Check for hand gestures and navigate based on the current page
+//                 console.log(window.location.pathname);
+//                 if (window.location.pathname === '/Group_27/') { // Check if on home page
+//                     if (rightHandRaised && leftHandRaised) {
+//                         alert("Both hands are raised!");
+//                     } else if (rightHandRaised) {
+//                         window.location.href = '/Group_27/sitting.html'; // Navigate to /sitting if right hand raised
+//                     } else if (leftHandRaised) {
+//                         window.location.href = '/Group_27/standing.html'; // Navigate to /standing if left hand raised
+//                     }
+//                 }
+//             }
+//         },
 
-        if(frame.people[0].joints[8].position.y < chest_y){
-            console.log("Left hand raised!");
-            return true;
-        }
-        console.log("ANANYA IS DOWN");
-        return false;
-    }
-};
+//         show: function (frame) {
+//             $('img.frame').attr("src", 'data:image/png;base64,' + frame.src);
+//         },
 
+//         get_num_people: function (frame) {
+//             return frame.people.length;
+//         },
 
-var twod = {
-    socket: null,
-    // create a connection to the camera feed
-    start: function () {
-        var url = "ws://" + host + "/twod";
-        twod.socket = new WebSocket(url);
+//         is_right_hand_raised: function (frame) {
+//             var chest_y = frame.people[0].joints[2].position.y;
+//             return frame.people[0].joints[15].position.y < chest_y;
+//         },
 
-        // whenever a new frame is received...
-        twod.socket.onmessage = function (event) {
+//         is_left_hand_raised: function (frame) {
+//             var chest_y = frame.people[0].joints[2].position.y;
+//             return frame.people[0].joints[8].position.y < chest_y;
+//         }
+//     };
 
-            // parse and show the raw data
-            twod.show(JSON.parse(event.data));
-        }
-    },
-    // show the image by adjusting the source attribute of the HTML img object previously created
-    show: function (twod) {
-        $('img.twod').attr("src", 'data:image/pnjpegg;base64,' + twod.src);
-    },
-};
+//     // Start WebSocket connections for frames and 2D data
+//     frames.start();
+
+//     var twod = {
+//         socket: null,
+
+//         start: function () {
+//             var url = "ws://" + host + "/twod";
+//             twod.socket = new WebSocket(url);
+//             twod.socket.onmessage = function (event) {
+//                 twod.show(JSON.parse(event.data));
+//             }
+//         },
+
+//         show: function (twod) {
+//             $('img.twod').attr("src", 'data:image/png;base64,' + twod.src);
+//         }
+//     };
+
+//     // Start WebSocket connection for 2D data
+//     twod.start();
+// });
