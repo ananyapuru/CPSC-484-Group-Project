@@ -17,10 +17,12 @@ var frames = {
             frames.show(frame);
             var people = frames.get_num_people(frame);
             var rightHandRaised = frames.is_right_hand_raised(frame);
+            var leftHandRaised = frames.is_right_hand_raised(frame);
     
             // Update the web page with the number of people detected
             document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
             document.getElementById('rightHandRaised').innerText = "Right hand raised: " + rightHandRaised;
+            document.getElementById('leftHandRaised').innerText = "Left hand raised: " + leftHandRaised;
         }
     },
     
@@ -40,6 +42,18 @@ var frames = {
         var chest_z = frame.people[0].joints[2].position.z;
 
         if(frame.people[0].joints[15].position.y < chest_y){
+            return true;
+        }
+        return false;
+    },
+
+    is_left_hand_raised: function (frame) {
+        // TODO: Nick add logic here!
+        var chest_x = frame.people[0].joints[2].position.x;
+        var chest_y = frame.people[0].joints[2].position.y;
+        var chest_z = frame.people[0].joints[2].position.z;
+
+        if(frame.people[0].joints[8].position.y < chest_y){
             return true;
         }
         return false;
