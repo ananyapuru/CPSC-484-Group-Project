@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     var host = "cpsc484-03.stdusr.yale.internal:8888";
     var errorDisplay = document.getElementById('errorDisplay');
+    var errorDisplay1 = document.getElementById('errorDisplay1');
 
     var frames = {
         socket: null,
@@ -12,23 +13,34 @@ document.addEventListener("DOMContentLoaded", function() {
             frames.socket.onmessage = function (event) {
                 frames.lastFrame = JSON.parse(event.data);
                 frames.show(frames.lastFrame);
+                var people = frames.get_num_people(frames.lastFrame);
+                document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+                if(people > 0){
+                    if(people > 1){
+                        document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
+                    }
+                    else {
+                        document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
+                    }
+                }
+                else {
+                    document.getElementById('greeting').innerText = "Anyone there?"; 
+                }
 
                 var closestPerson = frames.get_closest_person(frames.lastFrame);
                 if (closestPerson) {
-                    var people = frames.get_num_people(frames.lastFrame);
+                    var spineNavalZ = closestPerson.joints[1].position.z;
+                    if (spineNavalZ > 2400) {
+                        errorDisplay1.innerText = "Move closer!";
+                    } else if (spineNavalZ < 1500) {
+                        errorDisplay1.innerText = "Back up!";
+                    } else {
+                        errorDisplay1.innerText = ""; // Clear the error message
+                    }
+
                     var rightHandRaised = frames.is_right_hand_raised(closestPerson);
                     var leftHandRaised = frames.is_left_hand_raised(closestPerson);
 
-                    if(people > 0){
-                        if(people > 1){
-                            document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
-                        }
-                        else {
-                            document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
-                        }
-                    }
-
-                    document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
                     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
 
