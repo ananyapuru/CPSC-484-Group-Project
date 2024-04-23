@@ -41,10 +41,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     var rightHandRaised = frames.is_right_hand_raised(closestPerson);
                     var leftHandRaised = frames.is_left_hand_raised(closestPerson);
+                    var bothHandsRaised = leftHandRaised && rightHandRaised;
 
                     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
+                    document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
 
+                    if(window.location.pathname === '/standing.html'){
+                        console.log("Standing");
+                    }
                     if (window.location.pathname === '/') {
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
