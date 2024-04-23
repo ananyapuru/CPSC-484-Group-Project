@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 else {
                     document.getElementById('greeting').innerText = "Anyone there?"; 
-                }
+                }  
 
                 var closestPerson = frames.get_closest_person(frames.lastFrame);
                 if (closestPerson) {

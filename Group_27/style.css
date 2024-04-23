@@ -673,7 +673,7 @@ a span.rounded:hover {
     text-align: center;
     font-size: 14px; /* Smaller font size for status messages */
     color: #A0A0A0; /* A lighter shade for the status text */
-}
+} 
 
 /* Additional spacing for footer elements */
 .status-footer > div {
