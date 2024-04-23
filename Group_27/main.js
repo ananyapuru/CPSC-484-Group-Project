@@ -33,9 +33,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     var leftHandRaised = frames.is_left_hand_raised(closestPerson);
                     var bothHandsRaised = leftHandRaised && rightHandRaised;
 
-                    document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
-                    document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
-                    document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
+                    if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                        document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
+                        document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
+                        document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
+                    }
 
                     if (window.location.pathname === '/standing.html' || window.location.pathname === '/' || window.location.pathname === 'index.html') {
                         // Handle left hand raise
