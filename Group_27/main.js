@@ -2,10 +2,22 @@ document.addEventListener("DOMContentLoaded", function() {
     var host = "cpsc484-03.stdusr.yale.internal:8888";
     var errorDisplay = document.getElementById('errorDisplay');
     var errorDisplay1 = document.getElementById('errorDisplay1');
+    var timerAmount = 3000;
 
     var frames = {
         socket: null,
         lastFrame: null,
+        leftHandRaiseTimer: null,
+        rightHandRaiseTimer: null,
+        posturePages: [
+            'forward_head_posture.html',
+            // 'anterior-pelvic-tilt.html',
+            // 'uneven-shoulders.html',
+            // 'sloped-shoulders.html',
+            // 'posterior-pelvic-tilt.html',
+            // 'lateral-pelvic-tilt.html'
+        ],
+        currentIndex: 0,
 
         start: function () {
             var url = "ws://" + host + "/frames";
@@ -16,9 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 
                 var people = frames.get_num_people(frames.lastFrame);
                 document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+
+                console.log(window.location.pathname);
                 
                 var closestPerson = frames.get_closest_person(frames.lastFrame);
-                console.log("hi");
                 if (closestPerson) {
                     var spineNavalZ = closestPerson.joints[1].position.z;
                     if (spineNavalZ > 2400) {
@@ -39,21 +52,16 @@ document.addEventListener("DOMContentLoaded", function() {
                         document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
                     }
 
-                    if (window.location.pathname === '/standing.html' || window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    if (window.location.pathname === '/standing.html') {
                         // Handle left hand raise
                         if (leftHandRaised) {
                             if (!frames.leftHandRaiseTimer) {
                                 frames.leftHandRaiseTimer = setTimeout(function() {
                                     if (frames.is_left_hand_raised(frames.get_closest_person(frames.lastFrame))) {
-                                        if (window.location.pathname === '/standing.html') {
-                                            window.location.href = 'resources.html';
-                                        }
-                                        else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
-                                            window.location.href = 'standing.html';
-                                        }
+                                        window.location.href = 'resources.html';
                                     }
                                     frames.leftHandRaiseTimer = null;
-                                }, 5000); // 5 second delay
+                                }, timerAmount); // 5 second delay
                             }
                         } else {
                             clearTimeout(frames.leftHandRaiseTimer);
@@ -65,23 +73,17 @@ document.addEventListener("DOMContentLoaded", function() {
                             if (!frames.rightHandRaiseTimer) {
                                 frames.rightHandRaiseTimer = setTimeout(function() {
                                     if (frames.is_right_hand_raised(frames.get_closest_person(frames.lastFrame))) {
-                                        if (window.location.pathname === '/standing.html') {
-                                            window.location.href = '/';
-                                        }
-                                        else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
-                                            window.location.href = 'sitting.html';
-                                        }
+                                        window.location.href = '/';
                                     }
                                     frames.rightHandRaiseTimer = null;
-                                }, 5000); // 5 second delay
+                                }, timerAmount); // 5 second delay
                             }
                         } else {
                             clearTimeout(frames.rightHandRaiseTimer);
                             frames.rightHandRaiseTimer = null;
                         }
                     }
-
-                    if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
                         if(people > 0){
                             if(people > 1){
                                 document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
@@ -96,51 +98,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
-                        } else if (rightHandRaised) {
-                            window.location.href = 'sitting.html';
                         } else if (leftHandRaised) {
                             window.location.href = 'standing.html';
                         } else {
                             // Clear the error message if no hands are raised
                             errorDisplay.innerText = "";
                         }
-
-                        // step 1 of analysis: tell the user to face the TV directly
-
-                        // during step 1: get the y positions of the user's shoulders
-                        // var left_shoulderY = closestPerson.joints[5].position.y;
-                        // var right_shoulderY = closestPerson.joints[12].position.y;
-
-                        // the user's shoulder score is 100 - (difference in y position)
-                        // var score_S = Math.abs(100 - (left_shoulderY - right_shoulderY));
-
-                        // also get the y positions of the user's hips
-                        // var left_hipY = closestPerson.joints[18].position.y;
-                        // var right_hipY = closestPerson.joints[22].position.y;
-
-                        // the user's hip score is 100 - (difference in y position)
-                        // var score_H = Math.abs(100 - (left_shoulderY - right_shoulderY));
-
-                        // step 2 of analysis: tell the user to turn 90 degress left/right
-
-                        // during step 2: get the z positions of the user's spine (naval) and pelvis
-                        // var pelvisZ = closestPerson.joints[0].position.z;
-                        // var naval_spineZ = closestPerson.joints[1].position.z;
-
-                        // the user's back score is 100 - (difference in z position)
-                        // var score_B = Math.abs(100 - (pelvisZ - naval_spineZ));
-
-                        // also get the z positions of the user's neck and chest
-                        // var neckZ = closestPerson.joints[3].position.z;
-                        // var chestZ = closestPerson.joints[2].position.z;
-
-                        // the user's neck score is 100 - (difference in z position)
-                        // var score_N = Math.abs(100 - (neckZ - chestZ));
-
-                        // after analysis
-
-                        // the user's total score is the average of the component scores
-                        // on the "Results/Resources page, list resources for components if the score < 80"
                         
                         // Collect x positions for specific joints and normalize relative to spine_naval
                         var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
@@ -174,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             postureScoreElement.id = 'postureScore';
                             document.body.appendChild(postureScoreElement);
                         }
-                        postureScoreElement.innerText = "Posture Score: " + postureScore.toFixed(2) + "%";
+                        document.getElementById('postureScoreElement').innerText = "Posture Score: " + postureScore.toFixed(2) + "%";
 
                         // Log the result to console
                         if (sumOfSquares > 2000) {
@@ -183,7 +146,26 @@ document.addEventListener("DOMContentLoaded", function() {
                         else {
                             console.log("Good Posture!: ", sumOfSquares);
                         }
-                        // console.log("Sum of squares:", sumOfSquares);
+                    }
+
+                    else if(window.location.pathname === '/resources.html' || window.location.pathname === 'forward_head_posture.html'){
+                        console.log("Hello");
+                        if (rightHandRaised) {
+                            if (!frames.rightHandRaiseTimer) {
+                                frames.rightHandRaiseTimer = setTimeout(function() {
+                                    if (frames.is_right_hand_raised(frames.get_closest_person(frames.lastFrame))) {
+                                        window.location.href = '/';
+                                    }
+                                    frames.rightHandRaiseTimer = null;
+                                }, timerAmount); // 5 second delay
+                            }
+                        } else {
+                            clearTimeout(frames.rightHandRaiseTimer);
+                            frames.rightHandRaiseTimer = null;
+                        }
+
+                        console.log("Slideshow starting??");
+                        frames.handlePosturePageSlideshow();
                     }
                 }
             }
@@ -219,6 +201,16 @@ document.addEventListener("DOMContentLoaded", function() {
         is_left_hand_raised: function (person) {
             var chest_y = person.joints[2].position.y;
             return person.joints[8].position.y < chest_y;
+        },
+
+        handlePosturePageSlideshow: function () {
+            if (window.location.pathname === '/resources.html') {
+                setTimeout(function() {
+                    frames.currentIndex = (frames.currentIndex + 1) % frames.posturePages.length;
+                    var nextPosturePage = frames.posturePages[frames.currentIndex];
+                    window.location.href = nextPosturePage;
+                }, 1000); // Change page every 10 seconds
+            }
         }
     };
 
@@ -324,3 +316,88 @@ document.addEventListener("DOMContentLoaded", function() {
 //     // Start WebSocket connection for 2D data
 //     twod.start();
 // });
+
+
+
+// Broken
+
+                    // if (window.location.pathname === '/standing.html' || window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    //     // Handle left hand raise
+                    //     if (leftHandRaised) {
+                    //         if (!frames.leftHandRaiseTimer) {
+                    //             frames.leftHandRaiseTimer = setTimeout(function() {
+                    //                 if (frames.is_left_hand_raised(frames.get_closest_person(frames.lastFrame))) {
+                    //                     if (window.location.pathname === '/standing.html') {
+                    //                         window.location.href = 'resources.html';
+                    //                     }
+                    //                     else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    //                         window.location.href = 'standing.html';
+                    //                     }
+                    //                 }
+                    //                 frames.leftHandRaiseTimer = null;
+                    //             }, 5000); // 5 second delay
+                    //         }
+                    //     } else {
+                    //         clearTimeout(frames.leftHandRaiseTimer);
+                    //         frames.leftHandRaiseTimer = null;
+                    //     }
+
+                    //     // Handle right hand raise
+                    //     if (rightHandRaised) {
+                    //         if (!frames.rightHandRaiseTimer) {
+                    //             frames.rightHandRaiseTimer = setTimeout(function() {
+                    //                 if (frames.is_right_hand_raised(frames.get_closest_person(frames.lastFrame))) {
+                    //                     if (window.location.pathname === '/standing.html') {
+                    //                         window.location.href = '/';
+                    //                     }
+                    //                     else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    //                         window.location.href = 'sitting.html';
+                    //                     }
+                    //                 }
+                    //                 frames.rightHandRaiseTimer = null;
+                    //             }, 5000); // 5 second delay
+                    //         }
+                    //     } else {
+                    //         clearTimeout(frames.rightHandRaiseTimer);
+                    //         frames.rightHandRaiseTimer = null;
+                    //     }
+                    // }
+
+
+// Daniel
+                        // step 1 of analysis: tell the user to face the TV directly
+
+                        // during step 1: get the y positions of the user's shoulders
+                        // var left_shoulderY = closestPerson.joints[5].position.y;
+                        // var right_shoulderY = closestPerson.joints[12].position.y;
+
+                        // the user's shoulder score is 100 - (difference in y position)
+                        // var score_S = Math.abs(100 - (left_shoulderY - right_shoulderY));
+
+                        // also get the y positions of the user's hips
+                        // var left_hipY = closestPerson.joints[18].position.y;
+                        // var right_hipY = closestPerson.joints[22].position.y;
+
+                        // the user's hip score is 100 - (difference in y position)
+                        // var score_H = Math.abs(100 - (left_shoulderY - right_shoulderY));
+
+                        // step 2 of analysis: tell the user to turn 90 degress left/right
+
+                        // during step 2: get the z positions of the user's spine (naval) and pelvis
+                        // var pelvisZ = closestPerson.joints[0].position.z;
+                        // var naval_spineZ = closestPerson.joints[1].position.z;
+
+                        // the user's back score is 100 - (difference in z position)
+                        // var score_B = Math.abs(100 - (pelvisZ - naval_spineZ));
+
+                        // also get the z positions of the user's neck and chest
+                        // var neckZ = closestPerson.joints[3].position.z;
+                        // var chestZ = closestPerson.joints[2].position.z;
+
+                        // the user's neck score is 100 - (difference in z position)
+                        // var score_N = Math.abs(100 - (neckZ - chestZ));
+
+                        // after analysis
+
+                        // the user's total score is the average of the component scores
+                        // on the "Results/Resources page, list resources for components if the score < 80"
