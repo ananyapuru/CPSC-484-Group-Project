@@ -13,21 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
             frames.socket.onmessage = function (event) {
                 frames.lastFrame = JSON.parse(event.data);
                 frames.show(frames.lastFrame);
+                
                 var people = frames.get_num_people(frames.lastFrame);
                 document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
-                console.log("hi");
-                if(people > 0){
-                    if(people > 1){
-                        document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
-                    }
-                    else {
-                        document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
-                    }
-                }
-                else {
-                    document.getElementById('greeting').innerText = "Anyone there?"; 
-                }  
-
+                
                 var closestPerson = frames.get_closest_person(frames.lastFrame);
                 if (closestPerson) {
                     var spineNavalZ = closestPerson.joints[1].position.z;
@@ -47,10 +36,51 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
                     document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
 
-                    if(window.location.pathname === '/standing.html'){
-                        console.log("Standing");
+                    if (window.location.pathname === '/standing.html') {
+                        // Handle left hand raise
+                        if (leftHandRaised) {
+                            if (!frames.leftHandRaiseTimer) {
+                                frames.leftHandRaiseTimer = setTimeout(function() {
+                                    if (frames.is_left_hand_raised(frames.get_closest_person(frames.lastFrame))) {
+                                        window.location.href = 'resources.html';
+                                    }
+                                    frames.leftHandRaiseTimer = null;
+                                }, 5000); // 5 second delay
+                            }
+                        } else {
+                            clearTimeout(frames.leftHandRaiseTimer);
+                            frames.leftHandRaiseTimer = null;
+                        }
+
+                        // Handle right hand raise
+                        if (rightHandRaised) {
+                            if (!frames.rightHandRaiseTimer) {
+                                frames.rightHandRaiseTimer = setTimeout(function() {
+                                    if (frames.is_right_hand_raised(frames.get_closest_person(frames.lastFrame))) {
+                                        window.location.href = '/';
+                                    }
+                                    frames.rightHandRaiseTimer = null;
+                                }, 5000); // 5 second delay
+                            }
+                        } else {
+                            clearTimeout(frames.rightHandRaiseTimer);
+                            frames.rightHandRaiseTimer = null;
+                        }
                     }
-                    if (window.location.pathname === '/') {
+
+                    else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                        if(people > 0){
+                            if(people > 1){
+                                document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
+                            }
+                            else {
+                                document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
+                            }
+                        }
+                        else {
+                            document.getElementById('greeting').innerText = "Anyone there?"; 
+                        }
+
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
                         } else if (rightHandRaised) {

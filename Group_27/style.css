@@ -639,7 +639,7 @@ a span.rounded:hover {
 }
 
 /* Additional Elements */
-#peopleCount, #leftHandRaised, #rightHandRaised {
+#peopleCount, #leftHandRaised, #rightHandRaised, #bothHandsRaised {
     font-size: 25px; /* Sizing for visibility */
     margin: 10px 0; /* Spacing */
 }
