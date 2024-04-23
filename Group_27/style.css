@@ -602,11 +602,12 @@ body {
 .Content {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    /* align-items: center; */
+    height: 60vh;
 }
 
 .ContentSection p.sub-hero {
+    font-size: 20px;
     text-align: center;
     color: #FFF; /* White color for hero text */
 }
@@ -653,17 +654,17 @@ a span.rounded:hover {
 .main-header h1 {
     color: #FFF; /* White color for the main title */
     text-align: center;
-    font-size: 60px;
+    font-size: 70px;
     letter-spacing: 5px;
     text-shadow: 0px 4px 6px rgba(0,0,0,0.8);
-    margin-bottom: 30px; /* Spacing between title and content */
-    margin-top: 60px;
+    /* margin-bottom: 5vh; Spacing between title and content */
+    margin-top: 25vh;
 }
 
 /* Content Section Updates */
 .ContentSection h2.hero {
     font-size: 40px; /* Slightly smaller than main title for hierarchy */
-    margin-bottom: 50px; /* Spacing between Welcome text and I am */
+    margin-bottom: 25px; /* Spacing between Welcome text and I am */
 }
 
 /* Status Footer Styling */
@@ -698,4 +699,17 @@ a span.rounded:hover {
     to {
         transform: translateY(-2000px);
     }
+}
+.posturescore {
+    font-size: 30px;
+    margin-top: 0;
+}
+
+
+.red-text {
+    color: red;
+}
+  
+.green-text {
+    color: green;
 }

@@ -2,7 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var host = "cpsc484-03.stdusr.yale.internal:8888";
     var errorDisplay = document.getElementById('errorDisplay');
     var errorDisplay1 = document.getElementById('errorDisplay1');
+    var postureScoreEl = document.getElementById('postureScore');
     var timerAmount = 3000;
+    var maxSumOfSquares = 30000;
 
     var frames = {
         socket: null,
@@ -27,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 frames.show(frames.lastFrame);
                 
                 var people = frames.get_num_people(frames.lastFrame);
-                document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+                // document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
 
                 console.log(window.location.pathname);
                 
@@ -36,8 +38,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     var spineNavalZ = closestPerson.joints[1].position.z;
                     if (spineNavalZ > 2400) {
                         errorDisplay1.innerText = "Move closer!";
+                        console.log("Move closer!");
                     } else if (spineNavalZ < 1500) {
                         errorDisplay1.innerText = "Back up!";
+                        console.log("Back up!");
                     } else {
                         errorDisplay1.innerText = ""; // Clear the error message
                     }
@@ -46,13 +50,75 @@ document.addEventListener("DOMContentLoaded", function() {
                     var leftHandRaised = frames.is_left_hand_raised(closestPerson);
                     var bothHandsRaised = leftHandRaised && rightHandRaised;
 
-                    if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
-                        document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
-                        document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
-                        document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
-                    }
+                    // if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    //     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
+                    //     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
+                    //     document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
+                    // }
 
                     if (window.location.pathname === '/standing.html') {
+                        // Collect x positions for specific joints and normalize relative to spine_naval
+                        var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
+                        var xPositions = jointIndices.map(function(index) {
+                            return closestPerson.joints[index].position.x;
+                        });
+
+                        // Get x position of spine_naval and ear_right
+                        var spineNavalX = closestPerson.joints[1].position.x;
+
+                        // Normalize x positions relative to spine_naval
+                        var normalizedXPositions = xPositions.map(function(x) {
+                            return x - spineNavalX;
+                        });
+
+                        // Calculate sum of squares of differences from a vertical line (spine_naval)
+                        var sumOfSquares = 0;
+                        for (var i = 0; i < normalizedXPositions.length; i++) {
+                            sumOfSquares += Math.pow(normalizedXPositions[i], 2);
+                        }
+
+                        // Calculate posture score percentage
+                        var postureScore;
+                        if (sumOfSquares > maxSumOfSquares) {
+                            postureScore = 0; // Extremely bad posture
+                        }
+                        else if (sumOfSquares > maxSumOfSquares / 2) {
+                            postureScore = 70 - (Math.min(sumOfSquares, maxSumOfSquares) / maxSumOfSquares * 70);
+                        }
+                        else {
+                            postureScore = 100 - (Math.min(sumOfSquares, maxSumOfSquares) / maxSumOfSquares * 100);
+                        }
+
+                        // postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100
+
+                        // Display the posture score percentage on the screen
+                        console.log("hi");
+                        // var postureScoreElement = document.getElementById('postureScore');
+                        // if (!postureScoreElement) {
+                        //     postureScoreElement = document.createElement('div');
+                        //     postureScoreElement.id = 'postureScore';
+                        //     document.body.appendChild(postureScoreElement);
+                        //     console.log("Posture Score:", postureScore);
+                        // }
+                        console.log("Posture Score1:", postureScore);
+                        postureScoreEl.innerText = "Posture Score: " + Math.round(postureScore) + "%";
+
+                        if (postureScore < 50) {
+                            postureScoreEl.classList.remove('green-text');
+                            postureScoreEl.classList.add('red-text');
+                        } else {
+                            postureScoreEl.classList.remove('red-text');
+                            postureScoreEl.classList.add('green-text');
+                        }
+
+                        // Log the result to console
+                        if (sumOfSquares > 2000) {
+                            console.log("Bad Posture Detected!: ", sumOfSquares);
+                        }
+                        else {
+                            console.log("Good Posture!: ", sumOfSquares);
+                        }
+
                         // Handle left hand raise
                         if (leftHandRaised) {
                             if (!frames.leftHandRaiseTimer) {
@@ -84,17 +150,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
                     else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
-                        if(people > 0){
-                            if(people > 1){
-                                document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
-                            }
-                            else {
-                                document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
-                            }
-                        }
-                        else {
-                            document.getElementById('greeting').innerText = "Anyone there?"; 
-                        }
+                        // if(people > 0){
+                        //     if(people > 1){
+                        //         document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
+                        //     }
+                        //     else {
+                        //         document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
+                        //     }
+                        // }
+                        // else {
+                        //     document.getElementById('greeting').innerText = "Anyone there?"; 
+                        // }
 
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
@@ -103,48 +169,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         } else {
                             // Clear the error message if no hands are raised
                             errorDisplay.innerText = "";
-                        }
-                        
-                        // Collect x positions for specific joints and normalize relative to spine_naval
-                        var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
-                        var xPositions = jointIndices.map(function(index) {
-                            return closestPerson.joints[index].position.x;
-                        });
-
-                        // Get x position of spine_naval and ear_right
-                        var spineNavalX = closestPerson.joints[1].position.x;
-
-                        // Normalize x positions relative to spine_naval
-                        var normalizedXPositions = xPositions.map(function(x) {
-                            return x - spineNavalX;
-                        });
-
-                        // Calculate sum of squares of differences from a vertical line (spine_naval)
-                        var sumOfSquares = 0;
-                        for (var i = 0; i < normalizedXPositions.length; i++) {
-                            sumOfSquares += Math.pow(normalizedXPositions[i], 2);
-                        }
-
-                        // Calculate posture score percentage
-                        var maxSumOfSquares = 10000; // Assuming a maximum sum of squares of 10000 for extremely bad posture
-                        var postureScore = 100 - (sumOfSquares / maxSumOfSquares * 100);
-                        postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100
-
-                        // Display the posture score percentage on the screen
-                        var postureScoreElement = document.getElementById('postureScore');
-                        if (!postureScoreElement) {
-                            postureScoreElement = document.createElement('div');
-                            postureScoreElement.id = 'postureScore';
-                            document.body.appendChild(postureScoreElement);
-                        }
-                        document.getElementById('postureScoreElement').innerText = "Posture Score: " + postureScore.toFixed(2) + "%";
-
-                        // Log the result to console
-                        if (sumOfSquares > 2000) {
-                            console.log("Bad Posture Detected!: ", sumOfSquares);
-                        }
-                        else {
-                            console.log("Good Posture!: ", sumOfSquares);
                         }
                     }
 
