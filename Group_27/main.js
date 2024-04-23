@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
                 
                 var closestPerson = frames.get_closest_person(frames.lastFrame);
+                console.log("hi");
                 if (closestPerson) {
                     var spineNavalZ = closestPerson.joints[1].position.z;
                     if (spineNavalZ > 2400) {
@@ -36,13 +37,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
                     document.getElementById('bothHandsRaised').innerText = "Both hands raised: " + (bothHandsRaised? "Yes" : "No");
 
-                    if (window.location.pathname === '/standing.html') {
+                    if (window.location.pathname === '/standing.html' || window.location.pathname === '/' || window.location.pathname === 'index.html') {
                         // Handle left hand raise
                         if (leftHandRaised) {
                             if (!frames.leftHandRaiseTimer) {
                                 frames.leftHandRaiseTimer = setTimeout(function() {
                                     if (frames.is_left_hand_raised(frames.get_closest_person(frames.lastFrame))) {
-                                        window.location.href = 'resources.html';
+                                        if (window.location.pathname === '/standing.html') {
+                                            window.location.href = 'resources.html';
+                                        }
+                                        else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                                            window.location.href = 'standing.html';
+                                        }
                                     }
                                     frames.leftHandRaiseTimer = null;
                                 }, 5000); // 5 second delay
@@ -57,7 +63,12 @@ document.addEventListener("DOMContentLoaded", function() {
                             if (!frames.rightHandRaiseTimer) {
                                 frames.rightHandRaiseTimer = setTimeout(function() {
                                     if (frames.is_right_hand_raised(frames.get_closest_person(frames.lastFrame))) {
-                                        window.location.href = '/';
+                                        if (window.location.pathname === '/standing.html') {
+                                            window.location.href = '/';
+                                        }
+                                        else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                                            window.location.href = 'sitting.html';
+                                        }
                                     }
                                     frames.rightHandRaiseTimer = null;
                                 }, 5000); // 5 second delay
@@ -68,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
 
-                    else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
+                    if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
                         if(people > 0){
                             if(people > 1){
                                 document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
@@ -110,6 +121,20 @@ document.addEventListener("DOMContentLoaded", function() {
                         for (var i = 0; i < normalizedXPositions.length; i++) {
                             sumOfSquares += Math.pow(normalizedXPositions[i], 2);
                         }
+
+                        // Calculate posture score percentage
+                        var maxSumOfSquares = 10000; // Assuming a maximum sum of squares of 10000 for extremely bad posture
+                        var postureScore = 100 - (sumOfSquares / maxSumOfSquares * 100);
+                        postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100
+
+                        // Display the posture score percentage on the screen
+                        var postureScoreElement = document.getElementById('postureScore');
+                        if (!postureScoreElement) {
+                            postureScoreElement = document.createElement('div');
+                            postureScoreElement.id = 'postureScore';
+                            document.body.appendChild(postureScoreElement);
+                        }
+                        postureScoreElement.innerText = "Posture Score: " + postureScore.toFixed(2) + "%";
 
                         // Log the result to console
                         if (sumOfSquares > 2000) {
