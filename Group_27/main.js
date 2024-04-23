@@ -102,6 +102,44 @@ document.addEventListener("DOMContentLoaded", function() {
                             // Clear the error message if no hands are raised
                             errorDisplay.innerText = "";
                         }
+
+                        // step 1 of analysis: tell the user to face the TV directly
+
+                        // during step 1: get the y positions of the user's shoulders
+                        // var left_shoulderY = closestPerson.joints[5].position.y;
+                        // var right_shoulderY = closestPerson.joints[12].position.y;
+
+                        // the user's shoulder score is 100 - (difference in y position)
+                        // var score_S = Math.abs(100 - (left_shoulderY - right_shoulderY));
+
+                        // also get the y positions of the user's hips
+                        // var left_hipY = closestPerson.joints[18].position.y;
+                        // var right_hipY = closestPerson.joints[22].position.y;
+
+                        // the user's hip score is 100 - (difference in y position)
+                        // var score_H = Math.abs(100 - (left_shoulderY - right_shoulderY));
+
+                        // step 2 of analysis: tell the user to turn 90 degress left/right
+
+                        // during step 2: get the z positions of the user's spine (naval) and pelvis
+                        // var pelvisZ = closestPerson.joints[0].position.z;
+                        // var naval_spineZ = closestPerson.joints[1].position.z;
+
+                        // the user's back score is 100 - (difference in z position)
+                        // var score_B = Math.abs(100 - (pelvisZ - naval_spineZ));
+
+                        // also get the z positions of the user's neck and chest
+                        // var neckZ = closestPerson.joints[3].position.z;
+                        // var chestZ = closestPerson.joints[2].position.z;
+
+                        // the user's neck score is 100 - (difference in z position)
+                        // var score_N = Math.abs(100 - (neckZ - chestZ));
+
+                        // after analysis
+
+                        // the user's total score is the average of the component scores
+                        // on the "Results/Resources page, list resources for components if the score < 80"
+                        
                         // Collect x positions for specific joints and normalize relative to spine_naval
                         var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
                         var xPositions = jointIndices.map(function(index) {
