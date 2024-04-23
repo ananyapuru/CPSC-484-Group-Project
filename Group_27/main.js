@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 frames.show(frames.lastFrame);
                 var people = frames.get_num_people(frames.lastFrame);
                 document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+                console.log("hi");
                 if(people > 0){
                     if(people > 1){
                         document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
@@ -44,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById('rightHandRaised').innerText = "Right hand raised: " + (rightHandRaised ? "Yes" : "No");
                     document.getElementById('leftHandRaised').innerText = "Left hand raised: " + (leftHandRaised ? "Yes" : "No");
 
-                    if (window.location.pathname === '/Group_27/') {
+                    if (window.location.pathname === '/') {
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
                         } else if (rightHandRaised) {
-                            window.location.href = '/Group_27/sitting.html';
+                            window.location.href = 'sitting.html';
                         } else if (leftHandRaised) {
-                            window.location.href = '/Group_27/standing.html';
+                            window.location.href = 'standing.html';
                         } else {
                             // Clear the error message if no hands are raised
                             errorDisplay.innerText = "";
