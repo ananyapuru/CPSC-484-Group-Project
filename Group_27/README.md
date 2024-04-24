@@ -86,23 +86,15 @@ However, sometimes due to problems with the TV or upload website, the TV display
 
 You can find *The Posture Doctor* at TV 3, in front of Davies Auditorium. If another user isn't already interacting with *The Posture Doctor*, you will see a welcome screen that provides a quirky greeting and an option to analyze your posture when the left hand is raised. After raising your left hand, the analysis occurs as follows:
 
-1. The user is instructed to stand/sit facing the TV directly
-2. After ~5 seconds, the system takes a "screenshot" of the user's position
-    * With this first screenshot, the user's *shoulder* and *hips* posture components are scored
-3. The user is instructed to stand/sit facing 90 degrees to the left/right of the TV
-4. After ~5 seconds, the system takes another "screenshot" of the user's position
-    * With this second screenshot, the user's *back* and *neck* posture components are scored
+1. The user is instructed to stand facing perpendicular to the TV
+2. The system will perform immediate analysis of the user's posture and results are displayed
+    * Included in this analysis is the user's *back* and *neck* posture scores
+3. The user can then raise their left hand to navigate to the resources page to learn more. This page will have information including
+    * What causes the condition
+    * Symptoms of the condition
+    * Remedial exercises
 
-After this, you will be provided these component scores (as well as an overall score) - if these scores are low enough (**<80%**), a list of conditions will appear to the right of the scores, corresponding to whichever components received low scores.
-
-In this **results** page, there will be a cursor where the your right hand is located - if you raise your left hand while hovering over a condition's "**learn more**" text, you will navigate to a page with the following information:
-
-* What causes the condition
-* Symptoms of the condition
-* Remedial exercises
-
-You can navigate back to the **results** page with the same method for navigating to **learn more** pages, or can exit using a button at the bottom.
-
+The user is always able to return to the home page by raising their right hand
 
 ## Modifying Project Files
 
@@ -197,12 +189,13 @@ The following software dependencies are required to run this project:
 ## Contributors
 
 Ananya Purushottam (ap2626):
-I coded all the CSS design changes, including the refreshed design for all the resource HTML pages. I also did several bug fixes, Github handling by reverting bad commits, and a lot of troubleshooting with regards to Javascript variable coordination. I also coded up all the navigation flow between resource and homepages, and implemented a timeout function to only switch screens if the user's hand was raised for 3 seconds to prevent immediate accidental screen switches. This was very challenging to do and debug, but very rewarding. I contributed to this `README.md` as well by explaining how to run our project, as well as troubleshooting tips, i.e. explicitly indiciating if there are any constraints from the deployment environment as mentioned in our rubric!
+I coded the majority of the CSS design changes, including the refreshed design for all the resource HTML pages. I also did several bug fixes, Github handling by reverting bad commits, and a lot of troubleshooting with regards to Javascript variable coordination. I also coded up all the navigation flow between resource and homepages, and implemented a timeout function to only switch screens if the user's hand was raised for 3 seconds to prevent immediate accidental screen switches. This was very challenging to do and debug, but very rewarding. I contributed to this `README.md` as well by explaining how to run our project, as well as troubleshooting tips, i.e. explicitly indiciating if there are any constraints from the deployment environment as mentioned in our rubric!
 
 Nicholas Ribeiro (njr43)
+I coded some of the CSS design as well as refined the logic for posture scoring, updating the overall posture score to take into consideration the intermediate scores for certain posture-related conditions. I also helped Ananya with screen navigation issues and worked a little on touching up this `README.md` as well. 
 
 
 Daniel Strode (das327)
-I worked on compiling all the research for our 2 main tasks. I also worked a lot on this `README.md` file.
+I worked on compiling all the research for our 2 main tasks and populating the resource pages of our website with what I found. I also worked a lot on this `README.md` file as well.
 
 Kaci Xie (kx36)
