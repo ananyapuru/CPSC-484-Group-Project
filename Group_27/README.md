@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository contains code for Group 27's final project for CPSC 484/584 (Introduction to Human-Computer Interaction). This project is titled "The Posture Doctor", and addresses the following problem space:
+This repository is for Group 27's final project for CPSC 484/584 (Introduction to Human-Computer Interaction). This project is titled "The Posture Doctor", and addresses the following problem space:
 
 * "Bad posture must be corrected"
 
@@ -14,6 +14,11 @@ The goal of this project is to help Yalies identify any posture issues they may 
 
 * Learning what constitutes/indicates poor posture
 * Learning about posture-correcting exercises to strengthen and correct posture-related muscles
+
+## Running the System Prototype
+
+...(WIP)
+
 
 ## How to Use
 
@@ -36,7 +41,8 @@ In this **results** page, there will be a cursor where the your right hand is lo
 
 You can navigate back to the **results** page with the same method for navigating to **learn more** pages, or can exit using a button at the bottom.
 
-## Modifying the project
+
+## Modifying Project Files
 
 In this directory are the following files:
 
@@ -47,47 +53,100 @@ In this directory are the following files:
     * provides logic for navigating the prototype, and scoring a user's posture
 
 ### HTML/CSS
+* anterior-pelvic-tilt.html
+    * page providing information for the '*anterior pelvic tilt*' condition.
 * index.html
     * the system's 'start screen'
 * forward_head_posture.html
     * page providing information for the '*forward head posture*' condition.
+* posterior_pelvic_tilt.html
+    * page providing information for the '*posterior pelvic tilt*' condition.
 * resources.html
     * page providing overall + component scores, as well as a list of identified conditions
 * sitting.html
     * navigated to from the start screen by a user raising their right hand; instructs user to sit facing the TV directly
+* sloped_shoulders.html
+    * page providing information for the '*sloped shoulders*' condition.
 * standing.html
     * navigated to from the start screen by a user raising hteir left hand; instructs user to stand facing the TV directly
+* uneven_shoulders.html
+    * page providing information for the '*uneven shoulders*' condition.
+* resources.css
+    * 
 * style.css
     * 
 
+
 ## Dependencies
 
-1. **Websocket API**
-* Version Information - 
-* Usage: Exchanging data between the browser and server
-* Information: When creating connections for this project, data was accessed using the IP and port address **\[Env_IP\]:8888**. To view live data currently shown on a given display with \[Server_Name\], on your local computer, open your browser to **https://\[Server_Name\]:8888**. For example, this project was tested using **http://cpsc484-03.stdusr.yale.internal:8888/**.
+The following software dependencies are required to run this project:
 
-2. **Cisco AnyConnect**
-* Version: 4.10.07073
-* Usage: For connecting to the Yale VPN remotely
-* Information: When running the application (called "Cisco AnyConnect Secure Mobility Client"), enter **access.yale.edu** in the space and provide your access credentials (NetID/password)
+### External Libraries/APIs
 
-3. **Yale Virtual Private Network**
-* Usage: Accessing data from the HCI displays
-* Information: Yale's network can be accessed on-campus by connecting to YaleSecure, and providing your NetID and password. If accessing the Yale VPN remotely, refer to *Cisco AnyConnect*
+- **Websocket**: Protocol for communication channels and data exchange
+    - Version: latest stable version
+    - Installation: Natively supported by web browsers; no installation required
+    - Information: When creating connections for this project, data was accessed using the IP and port address **\[Env_IP\]:8888**. To view live data currently shown on a given display with \[Server_Name\], on your local computer, open your browser to **https://\[Server_Name\]:8888**. For example, this project was tested using **http://cpsc484-03.stdusr.yale.internal:8888/**.
 
-4. **Azure Kinect**
-* Version: 
-* Supported operating systems/architectures:
-    * Windows 10 April 2018 (Version 1803, OS Build 17134) release (x64) or a later version
-    * Linux Ubuntu 18.04 (x64), with a GPU driver that uses OpenGLv4.4, or a later version
-* Usage: Collecting body pose data. The system's input is the sensor camera's image
-* Information: The sensor's (0,0,0) coordinate is at the center of the central lens. Facing the camera directly, the x axis bisects the lens from left (+x) to right (-x); the y axis bisects the lens from below (+y) to above(-y); and the z axis extends perpendicularly to the lens' center, with the +z direction extending out (away from the display and toward a user). Specific information regarding joint coordinates/data can be found [here](https://learn.microsoft.com/en-us/azure/kinect-dk/body-joints).
+- **Azure Kinect SDK**: Software Development Kit for Azure Kinect sensor camera
+    - Version: 1.4.1
+    - Installation: Installation instructions can be found [here](https://docs.microsoft.com/en-us/azure/kinect-dk/sensor-sdk-download)
 
-5. **Display**
-* Runs Ubuntu 20.04
-* Usage: For visualizing the system's output
-* Information: The display used in this project was a TV, however, other devices (desktop/laptop computers) may suffice. If you choose to use a hardware setup different from that of this project's, note that the location of the display relative to the sensor is important. For this project, the center of the TV is approximately 450 in the positive y direction (down) from the camera. 
+### Network Configuration
+
+- **Cisco AnyConnect**
+    - Version: 4.10.07073
+    - Usage: For remote access to the Yale network
+    - Information: When running the application (called "Cisco AnyConnect Secure Mobility Client"), enter **access.yale.edu** in the space and provide your access credentials (NetID/password)
+    - Installation: Download and configure Cisco AnyConnect from the [Yale Software Library](https://yale.onthehub.com/WebStore/Welcome.aspx)
+
+- **Connection to the Yale Virtual Private Network**: Data for HCI displays used in this project are only accessible via the Yale VPN
+    - Configuration: If working on campus, connect to the YaleSecure network with NetID/password. If working off-campus, refer to the information under *Cisco AnyConnect*.
+    
+### Browser Support
+
+- **Google Chrome**: Browser for testing and compatability
+    - Version: Latest stable release
+    - Installation: Install from the official [Chrome website](https://www.google.com/chrome/)
+
+- **Mozilla Firefox**: Browser for testing and compatability
+    - Version: Latest stable release, or [developer edition](https://www.mozilla.org/en-US/firefox/developer/)
+    - Installation: Install from the official [Firefox website](https://www.mozilla.org/en-US/firefox/)
+
+### Development Tools
+
+- **Node.js**: Runtime environment for JavaScript
+    - Version: 14.17.0 or later
+    - Installation: Install from the official [Node.js website](https://nodejs.org)
+
+### Development Environment
+* **Visual Studio Code**
+    - Version: Latest stable release
+    - Installation: Install from the offical [Visual Studio Code website](https://code.visualstudio.com/)
+
+### Hardware components
+
+* **Azure Kinect Sensor Camera**
+    - Usage: Collecting body pose data; the system's input is the camera's image
+    - Supported operating systems/architectures:
+        - Windows 10 April 2018 (Version 1803, OS Build 17134) release (x64) or a later version
+        - Linux Ubuntu 18.04 (x64), with a GPU driver that uses OpenGLv4.4, or a later version
+    - Information: The sensor's (0,0,0) coordinate is at the center of the central lens. Facing the camera directly, the x axis bisects the lens from left (+x) to right (-x); the y axis bisects the lens from below (+y) to above(-y); and the z axis extends perpendicularly to the lens' center, with the +z direction extending out (away from the display and toward a user). Specific information regarding joint coordinates/data can be found [here](https://learn.microsoft.com/en-us/azure/kinect-dk/body-joints).
+
+* **Display**
+    - Usage: visualizing information and acting as an interface for the system's users
+    - Operating System: Linux Ubuntu 20.04
+    - Information: The display used in this project was a TV, however, other devices (desktop/laptop computers) may suffice. If you choose to use a hardware setup different from that of this project's, note that the location of the display relative to the sensor is important. For this project, the center of the TV is approximately 450 in the positive y direction (down) from the camera. It is also important that the display's physical location is spacious enough in the +z direction; the system doesn't allow for the user to have a small enough z position (relative to the camera).
+
+
+## Constraints in Deployment Environment
+
+Some physical constraints to consider when implementing the project:
+
+* Kinect Azure's relative position to the display
+    - With our system prototype, the sensor camera was mounted directly atop the display, oriented such that there was no significant angle between the camera and display's directions. If the sensor camera is mounted in another location (below the display, to the sides, etc.), it is important that conditions for logic components be updated, as position coordinates will change.
+* Distance from Kinect Azure sensor to in-frame objects
+    - The system will halt if the user is too close to the sensor or partially out of frame; it is important that the user be provided adequate space for movement, so that the system may proceed.
 
 
 ## Contributors
