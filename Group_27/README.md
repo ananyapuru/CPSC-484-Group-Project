@@ -77,6 +77,11 @@ Steps:
 However, sometimes due to problems with the TV or upload website, the TV display does not always display or reflect the most recently uploaded version of our project. Therefore, if the TV does not display a greeting message to the user when the user is in the vision of the sensor and/or recognize instruction responses such as the left hand being raised, we request you to look at the output on your browser rather than on the TV. We promise you it works on the TV display, and we've spent DAYS testing it, but sometimes, with 0 changes to our code, the TV display just won't reflect the most up-to-date version of the code we uploaded. We are sorry for any inconvenience this causes and sincerely request that this does not negatively impact our grade as the display not reflecting the most recent code we've uploaded is not in our control :(
 - Physical constraints on where the user should stand will be made explicit by our on-screen instructions! The user will be told if they are too close or too far away. If there are multiple users in the screen, our installation automatically recognizes the closest person!
 
+* Kinect Azure's relative position to the display
+    - With our system prototype, the sensor camera was mounted directly atop the display, oriented such that there was no significant angle between the camera and display's directions. If the sensor camera is mounted in another location (below the display, to the sides, etc.), it is important that conditions for logic components be updated, as position coordinates will change.
+* Distance from Kinect Azure sensor to in-frame objects
+    - The system will halt if the user is too close to the sensor or partially out of frame; it is important that the user be provided adequate space for movement, so that the system may proceed.
+
 ## How to interact with application
 
 You can find *The Posture Doctor* at TV 3, in front of Davies Auditorium. If another user isn't already interacting with *The Posture Doctor*, you will see a welcome screen that provides a quirky greeting and an option to analyze your posture when the left hand is raised. After raising your left hand, the analysis occurs as follows:
@@ -187,15 +192,6 @@ The following software dependencies are required to run this project:
     - Operating System: Linux Ubuntu 20.04
     - Information: The display used in this project was a TV, however, other devices (desktop/laptop computers) may suffice. If you choose to use a hardware setup different from that of this project's, note that the location of the display relative to the sensor is important. For this project, the center of the TV is approximately 450 in the positive y direction (down) from the camera. It is also important that the display's physical location is spacious enough in the +z direction; the system doesn't allow for the user to have a small enough z position (relative to the camera).
 
-
-## Constraints in Deployment Environment
-
-Some physical constraints to consider when implementing the project:
-
-* Kinect Azure's relative position to the display
-    - With our system prototype, the sensor camera was mounted directly atop the display, oriented such that there was no significant angle between the camera and display's directions. If the sensor camera is mounted in another location (below the display, to the sides, etc.), it is important that conditions for logic components be updated, as position coordinates will change.
-* Distance from Kinect Azure sensor to in-frame objects
-    - The system will halt if the user is too close to the sensor or partially out of frame; it is important that the user be provided adequate space for movement, so that the system may proceed.
 
 
 ## Contributors
