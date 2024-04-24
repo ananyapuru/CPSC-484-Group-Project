@@ -13,13 +13,14 @@ document.addEventListener("DOMContentLoaded", function() {
         rightHandRaiseTimer: null,
         posturePages: [
             'forward_head_posture.html',
-            // 'anterior-pelvic-tilt.html',
-            // 'uneven-shoulders.html',
-            // 'sloped-shoulders.html',
-            // 'posterior-pelvic-tilt.html',
-            // 'lateral-pelvic-tilt.html'
+            'anterior-pelvic-tilt.html',
+            'uneven_shoulders.html',
+            'sloped_shoulders.html',
+            'posterior_pelvic_tilt.html',
+            'lateral_pelvic_tilt.html'
         ],
-        currentIndex: 0,
+        // currentIndex: 0,
+        currentIndex: Math.floor(Math.random() * 6),
 
         start: function () {
             var url = "ws://" + host + "/frames";
@@ -57,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // }
 
                     if (window.location.pathname === '/standing.html') {
+                        console.log("Inside");
                         // Collect x positions for specific joints and normalize relative to spine_naval
                         var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
                         var xPositions = jointIndices.map(function(index) {
@@ -172,7 +174,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
 
-                    else if(window.location.pathname === '/resources.html' || window.location.pathname === 'forward_head_posture.html'){
+            //         //             'uneven_shoulders.html',
+            // 'sloped_shoulders.html',
+            // 'posterior_pelvic_tilt.html',
+            // 'lateral_pelvic_tilt.html'
+                    else if(window.location.pathname === '/resources.html' || window.location.pathname === '/forward_head_posture.html' ||   window.location.pathname === '/anterior-pelvic-tilt.html'
+                    || window.location.pathname === '/uneven_shoulders.html' || window.location.pathname === '/sloped_shoulders.html' || window.location.pathname === '/posterior_pelvic_tilt.html' 
+                    || window.location.pathname === '/lateral_pelvic_tilt.html'){
                         if (rightHandRaised) {
                             if (!frames.rightHandRaiseTimer) {
                                 frames.rightHandRaiseTimer = setTimeout(function() {
@@ -226,7 +234,9 @@ document.addEventListener("DOMContentLoaded", function() {
         },
 
         handlePosturePageSlideshow: function () {
-            if (window.location.pathname === '/resources.html') {
+            if (window.location.pathname === '/resources.html' || window.location.pathname === '/forward_head_posture.html' ||   window.location.pathname === '/anterior-pelvic-tilt.html'
+            || window.location.pathname === '/uneven_shoulders.html' || window.location.pathname === '/sloped_shoulders.html' || window.location.pathname === '/posterior_pelvic_tilt.html' 
+            || window.location.pathname === '/lateral_pelvic_tilt.html') {
                 setTimeout(function() {
                     frames.currentIndex = (frames.currentIndex + 1) % frames.posturePages.length;
                     var nextPosturePage = frames.posturePages[frames.currentIndex];
