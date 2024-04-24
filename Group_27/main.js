@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var host = "cpsc484-03.stdusr.yale.internal:8888";
     var errorDisplay = document.getElementById('errorDisplay');
     var errorDisplay1 = document.getElementById('errorDisplay1');
-    var postureScoreEl = document.getElementById('postureScore');
-    var neckScoreEl = document.getElementById('neckScore');
-    var backScoreEl = document.getElementById('backScore');
 
     var timerAmount = 3000;
     var maxSumOfSquares = 30000;
@@ -62,6 +59,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (window.location.pathname === '/standing.html') {
                         console.log("Inside");
+                        var postureScoreEl = document.getElementById('postureScore');
+                        var neckScoreEl = document.getElementById('neckScore');
+                        var backScoreEl = document.getElementById('backScore');
                         // during step 2: get the z positions of the user's spine (naval) and pelvis
                         var pelvisZ = closestPerson.joints[0].position.x;
                         var naval_spineZ = closestPerson.joints[1].position.x;
@@ -210,11 +210,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             errorDisplay.innerText = "";
                         }
                     }
-
-            //         //             'uneven_shoulders.html',
-            // 'sloped_shoulders.html',
-            // 'posterior_pelvic_tilt.html',
-            // 'lateral_pelvic_tilt.html'
                     else if(window.location.pathname === '/resources.html' || window.location.pathname === '/forward_head_posture.html' ||   window.location.pathname === '/anterior-pelvic-tilt.html'
                     || window.location.pathname === '/uneven_shoulders.html' || window.location.pathname === '/sloped_shoulders.html' || window.location.pathname === '/posterior_pelvic_tilt.html' 
                     || window.location.pathname === '/lateral_pelvic_tilt.html'){
