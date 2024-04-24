@@ -109,8 +109,9 @@ h1{
 .list-title {
     display: block; /* This is default for div but restating for clarity */
     width: 100%; /* Full width of its parent container */
-    margin: 0; /* Reset margin to align with the container's border */
-    padding: 20px; /* Increase padding for visual prominence */
+    /* margin: 0; Reset margin to align with the container's border */
+    margin-top: 0;
+    padding: 18px; /* Increase padding for visual prominence */
     font-size: 32px; /* Increase font size */
     font-weight: bold;
     border-top-left-radius: 8px; /* Match container border */
@@ -134,7 +135,7 @@ h1{
     list-style-type: disc;
 } */
 .list-item, .list-header {
-    font-size: 18px;
+    font-size: 32px;
     font-weight: 500; /* Medium weight for sub-headers */
     margin-top: 5%; /* Space above each new section */
     text-decoration: underline; /* Slight emphasis on section headers */
@@ -144,7 +145,7 @@ h1{
 }
 
 .list-subitem {
-    font-size: 16px; /* Smaller than headers for hierarchy */
+    font-size: 23px; /* Smaller than headers for hierarchy */
     padding-left: 20px; /* Indent items for clear hierarchy */
     list-style-type: disc; /* Ensures discs are used as bullets */
     margin-bottom: 10px; /* Space between items */
