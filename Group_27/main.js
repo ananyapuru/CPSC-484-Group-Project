@@ -150,17 +150,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
                     else if (window.location.pathname === '/' || window.location.pathname === 'index.html') {
-                        // if(people > 0){
-                        //     if(people > 1){
-                        //         document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
-                        //     }
-                        //     else {
-                        //         document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
-                        //     }
-                        // }
-                        // else {
-                        //     document.getElementById('greeting').innerText = "Anyone there?"; 
-                        // }
+                        if(people > 0){
+                            if(people > 1){
+                                document.getElementById('greeting').innerText = "What a sexy group of " + people + " people"; 
+                            }
+                            else {
+                                document.getElementById('greeting').innerText = "What a sexy person we have over here!"; 
+                            }
+                        }
+                        else {
+                            document.getElementById('greeting').innerText = "Anyone there?"; 
+                        }
 
                         if (rightHandRaised && leftHandRaised) {
                             errorDisplay.innerText = "Both hands are raised!";
