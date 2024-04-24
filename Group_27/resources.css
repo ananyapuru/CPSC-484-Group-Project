@@ -104,8 +104,8 @@ h1{
 
 
 .list-title {
-    display: block;
-    width: 100%; /* Make the title span the full width of the container */
+    display: block; /* This is default for div but restating for clarity */
+    width: 100%; /* Full width of its parent container */
     margin: 0; /* Reset margin to align with the container's border */
     padding: 20px; /* Increase padding for visual prominence */
     font-size: 32px; /* Increase font size */
@@ -113,9 +113,10 @@ h1{
     border-top-left-radius: 8px; /* Match container border */
     border-top-right-radius: 8px; /* Match container border */
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    justify-content: center;
+    text-align: center; /* Center the text within the .list-title */
+    background-color: rgba(255, 255, 255, 0.1); /* Optional: better visibility against background shapes */
 }
+
 
 /* .list-item, .list-header {
     text-align: center; 
@@ -141,20 +142,38 @@ h1{
 
 .list-subitem {
     font-size: 16px; /* Smaller than headers for hierarchy */
-    /* padding-left: 20px; Indent items for clear hierarchy */
-    list-style-type: disc; /* Use discs for bullets */
+    padding-left: 20px; /* Indent items for clear hierarchy */
+    list-style-type: disc; /* Ensures discs are used as bullets */
     margin-bottom: 10px; /* Space between items */
 }
+
 
 ul {
     padding-left: 0; /* Remove default padding */
     list-style-position: inside; /* Ensures bullets align within the content area */
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
 }
 
 /* Additional Elements */
 #peopleCount, #leftHandRaised, #rightHandRaised, #bothHandsRaised {
     font-size: 25px; /* Sizing for visibility */
     margin: 10px 0; /* Spacing */
+}
+
+#rightHandRaised {
+    display: inline-block;
+    margin: 30px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white */
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+#rightHandRaised {
+    background-color: rgba(243, 82, 238, 0.1); /* Increase transparency on hover */
 }
 
 /* Footer styling to ensure it is at the bottom */
