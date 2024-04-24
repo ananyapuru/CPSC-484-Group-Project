@@ -588,7 +588,7 @@ html {
 
 /* General Body Styling */
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Big Caslon', serif;
     color: #E0E0E0; /* Light gray color for all text */
     margin: 0;
     padding: 0;
@@ -641,7 +641,7 @@ a span.rounded:hover {
 
 /* Additional Elements */
 #peopleCount, #leftHandRaised, #rightHandRaised, #bothHandsRaised {
-    font-size: 25px; /* Sizing for visibility */
+    font-size: 30px; /* Sizing for visibility */
     margin: 10px 0; /* Spacing */
 }
 
