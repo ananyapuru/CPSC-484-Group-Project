@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var errorDisplay = document.getElementById('errorDisplay');
     var errorDisplay1 = document.getElementById('errorDisplay1');
     var postureScoreEl = document.getElementById('postureScore');
+    var neckScoreEl = document.getElementById('neckScore');
+    var backScoreEl = document.getElementById('backScore');
+
     var timerAmount = 3000;
     var maxSumOfSquares = 30000;
 
@@ -59,6 +62,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (window.location.pathname === '/standing.html') {
                         console.log("Inside");
+                        // during step 2: get the z positions of the user's spine (naval) and pelvis
+                        var pelvisZ = closestPerson.joints[0].position.x;
+                        var naval_spineZ = closestPerson.joints[1].position.x;
+
+                        // the user's back score is 100 - (difference in z position)
+                        var score_B = Math.abs(100 - ((pelvisZ - naval_spineZ) * 4));
+
+                        // also get the z positions of the user's neck and chest
+                        var neckZ = closestPerson.joints[3].position.x;
+                        var chestZ = closestPerson.joints[2].position.x;
+
+                        // the user's neck score is 100 - (difference in z position)
+                        var score_N = Math.abs(100 - ((neckZ - chestZ) * 2));
+
+
+                        neckScoreEl.innerText = "Neck Alignment Score: " + Math.round(Math.min(score_N, 100)) + "%";
+                        if (score_N < 80) {
+                            neckScoreEl.classList.remove('green-text');
+                            neckScoreEl.classList.add('red-text');
+                        } else {
+                            neckScoreEl.classList.remove('red-text');
+                            neckScoreEl.classList.add('green-text');
+                        }
+                        backScoreEl.innerText = "Back Alignment Score: " + Math.round(Math.min(score_B, 100)) + "%";
+                        if (score_B < 80) {
+                            backScoreEl.classList.remove('green-text');
+                            backScoreEl.classList.add('red-text');
+                        } else {
+                            backScoreEl.classList.remove('red-text');
+                            backScoreEl.classList.add('green-text');
+                        }
+
                         // Collect x positions for specific joints and normalize relative to spine_naval
                         var jointIndices = [3, 4, 11, 2, 0, 26]; // Indices for ear_right, neck, clavicle_left, clavicle_right, spine_chest, spine_naval, pelvis
                         var xPositions = jointIndices.map(function(index) {
@@ -86,9 +121,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                         else if (sumOfSquares > maxSumOfSquares / 2) {
                             postureScore = 70 - (Math.min(sumOfSquares, maxSumOfSquares) / maxSumOfSquares * 70);
+                            postureScore = ((postureScore * 3) + score_B + score_N) / 5;
                         }
                         else {
                             postureScore = 100 - (Math.min(sumOfSquares, maxSumOfSquares) / maxSumOfSquares * 100);
+                            postureScore = ((postureScore * 3) + score_B + score_N) / 5;
                         }
 
                         // postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100

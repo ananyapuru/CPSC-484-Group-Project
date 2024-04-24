@@ -705,6 +705,12 @@ a span.rounded:hover {
     margin-top: 0;
 }
 
+.posturescore1 {
+    font-size: 25px;
+    margin-top: 10px;
+
+}
+
 
 .red-text {
     color: red;
