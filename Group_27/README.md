@@ -15,14 +15,70 @@ The goal of this project is to help Yalies identify any posture issues they may 
 * Learning what constitutes/indicates poor posture
 * Learning about posture-correcting exercises to strengthen and correct posture-related muscles
 
+
+## Task 1: Learning what constitutes/indicates poor posture
+
+- We addressed this task as described in our Assignment 4 breakdown of responsibilities.
+- Daniel did a lot of research on what indicated poor posture, and Nick tried to use all the Kinect sensor joint information to codify indicators of poor posture. 
+- There were certain indicators and joints whose positioning we believed would be good indicators of good/poor posture, but had too much variability and gave us false positive results when we tried to use them in our score computation. 
+- Therefore, we excluded some of these joints from our calculations. 
+- Joint information we did use include the shoulder joints, the neck joints, the spine and hip joints. We had data that we normalized to evaluate the straightness of a user's spine, and other data that was more relatively defined, such as the parallel nature and degree of a user's shoulders.
+- Specifically, we identified 6 very common indicators of poor posture:
+    1. *Anterior pelvic tilt*: 
+    - Characterized by the front of the pelvis dropping and the back of the pelvis rising, often resulting from prolonged sitting and weakened abdominal muscles. 
+    - This position leads to an exaggerated curve in the lower back, causing discomfort and potential lower back pain.
+    2. *Forward tilted head*:
+    - Occurs when the head juts forward, misaligning with the spine, commonly due to excessive use of devices like smartphones and computers.
+    - This misalignment can strain the neck muscles and lead to chronic pain and headaches.
+    3. *Lateral pelvic tilt*:
+    - A condition where one side of the pelvis is higher than the other, which may develop from habits like consistently bearing weight on one leg or muscle imbalances.
+    - This can lead to asymmetrical walking patterns and increased stress on one side of the body.
+    4. *Sloped shoulders*:
+    - Involves shoulders that round forward, usually as a result of poor sitting habits and a lack of upper back strength.
+    - This posture can restrict breathing and cause tension and pain in the neck, shoulders, and upper back.
+    5. *Uneven shoulders*:
+    - Refers to one shoulder being higher than the other, often due to muscle imbalances, carrying loads on one side of the body, or scoliosis.
+    - It can lead to an imbalance in the spine and musculoskeletal strain, affecting overall mobility and comfort.
+    6. *Posterior pelvic tilt*:
+    - The opposite of anterior pelvic tilt, where the front of the pelvis rises and the back lowers, often related to tight hamstring and gluteus muscles.
+    - This tilt flattens the lower back curve, potentially leading to lower back discomfort and reduced flexibility.
+
+- It was informative and enjoyable to learn theoretically and test practically what constituted poor posture.
+
+
+## Task 2: Learning about posture-correcting exercises to strengthen and correct posture-related muscles
+
+- For our second task, we conducted more research to tie together common indicators of poor posture from Task 1 and exercises that could help alleviate the symptoms from such indicators and behaviors in users.
+- We used the 6 indicators/symptoms/side-effects/causes (since everything is cyclic and connected after all!) to inform the posture-correcting exercieses we suggest to users. 
+- Without going into all the detail that is available on each of the 6 resource pages for each of the causes of poor posture, we highlight here a few exercises we recommend to users based on research, namely: chin tucks, deltoid-targeting weightlifting, hip flexor stretches, foam rolling etc.
+
+
 ## Running the System Prototype
+To run our project, you need:
+1. Terminal with Python3 installed.
+2. Web Browser (Google Chrome, Safari, Firefox, Vivaldi)
+3. Source Code (either GitHub or downloaded .zip)
 
-...(WIP)
+Steps:
+1. Change directory into the `Group_27` project directory by typing the following in your terminal:
+`cd Group_27`
+2. Once you're in the directory, you should see several HTML pages, a `main.js` Javascript page, and two CSS stylesheets if you've opened the directory in Visual Studio Code or similar IDEs. You can also inspect all files in the folder by typing `ls` in your terminal.
+3. Confirm that the host you wish to run the code on is `cpsc484-03.stdusr.yale.internal:8888";`. For other hosts, change the variable `var host = "cpsc484-03.stdusr.yale.internal:8888";` in `main.js` accordingly. For instance, if you wish to run the code on TV #2, change the variable to `var host = "cpsc484-02.stdusr.yale.internal:8888";`.
+4. In your terminal, type the following command: `python3 -m http.server 5027`. 
+    - Note: We chose 5027 based on the Ed post, but it is not a fixed number or necessity! Feel free to choose any other server that does not conflict with another group's.
+5. The following message should appear on your terminal:
+`Serving HTTP on :: port 5027 (http://[::]:5027/) ...`
 
+6. Press `cmd` and click on the http link. This should redirect you to the homepage of our application running on your default browser.
+7. Follow the on-screen instructions on TV 3 or your authorized TV and enjoy improving your posture! :D
+
+## Troubleshooting [Important]
+Note that our code ALWAYS works locally on our computer when tested (with users) in front of TV3 outside Davies Auditorium.
+However, sometimes due to problems with the TV or upload website, the TV display does not always display or reflect the most recently uploaded version of our project. Therefore, if the TV does not display a greeting message to the user when the user is in the vision of the sensor and/or recognize instruction responses such as the left hand being raised, we request you to look at the output on your browser rather than on the TV.
 
 ## How to Use
 
-You can find *The Posture Doctor* at TV 3, in front of Davies Auditorium. If another user isn't already interacting with *The Posture Doctor*, you will see a welcome screen providing two options: Standing (raise left hand) and Sitting (raise right hand). After making a selection, the analysis occurs as follows:
+You can find *The Posture Doctor* at TV 3, in front of Davies Auditorium. If another user isn't already interacting with *The Posture Doctor*, you will see a welcome screen that provides a quirky greeting and an option to analyze your posture when the left hand is raised. After raising your left hand, the analysis occurs as follows:
 
 1. The user is instructed to stand/sit facing the TV directly
 2. After ~5 seconds, the system takes a "screenshot" of the user's position
@@ -63,8 +119,6 @@ In this directory are the following files:
     * page providing information for the '*posterior pelvic tilt*' condition.
 * resources.html
     * page providing overall + component scores, as well as a list of identified conditions
-* sitting.html
-    * navigated to from the start screen by a user raising their right hand; instructs user to sit facing the TV directly
 * sloped_shoulders.html
     * page providing information for the '*sloped shoulders*' condition.
 * standing.html
@@ -72,9 +126,9 @@ In this directory are the following files:
 * uneven_shoulders.html
     * page providing information for the '*uneven shoulders*' condition.
 * resources.css
-    * 
+    * Styling rules specified for the external resource pages.
 * style.css
-    * 
+    * Styling rules for general application pages (homepage i.e. `index.html`, `standing.html`).
 
 
 ## Dependencies
@@ -113,12 +167,6 @@ The following software dependencies are required to run this project:
     - Version: Latest stable release, or [developer edition](https://www.mozilla.org/en-US/firefox/developer/)
     - Installation: Install from the official [Firefox website](https://www.mozilla.org/en-US/firefox/)
 
-### Development Tools
-
-- **Node.js**: Runtime environment for JavaScript
-    - Version: 14.17.0 or later
-    - Installation: Install from the official [Node.js website](https://nodejs.org)
-
 ### Development Environment
 * **Visual Studio Code**
     - Version: Latest stable release
@@ -151,7 +199,13 @@ Some physical constraints to consider when implementing the project:
 
 ## Contributors
 
-Ananya Purushottam (ap2626)
+Ananya Purushottam (ap2626):
+I coded all the CSS design changes, including the refreshed design for all the resource HTML pages. I also did several bug fixes, Github handling by reverting bad commits, and a lot of troubleshooting with regards to Javascript variable coordination. I also coded up all the navigation flow between resource and homepages, and implemented a timeout function to only switch screens if the user's hand was raised for 3 seconds to prevent immediate accidental screen switches. This was very challenging to do and debug, but very rewarding.
+
 Nicholas Ribeiro (njr43)
+
+
 Daniel Strode (das327)
+I worked on compiling all the research for our 2 main tasks. I also worked a lot on this `README.md` file.
+
 Kaci Xie (kx36)
