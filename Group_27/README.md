@@ -82,7 +82,7 @@ However, sometimes due to problems with the TV or upload website, the TV display
 * Distance from Kinect Azure sensor to in-frame objects
     - The system will halt if the user is too close to the sensor or partially out of frame; it is important that the user be provided adequate space for movement, so that the system may proceed.
 
-## How to interact with application
+## Interacting with the Application
 
 You can find *The Posture Doctor* at TV 3, in front of Davies Auditorium. If another user isn't already interacting with *The Posture Doctor*, you will see a welcome screen that provides a quirky greeting and an option to analyze your posture when the left hand is raised. After raising your left hand, the analysis occurs as follows:
 
@@ -191,11 +191,13 @@ The following software dependencies are required to run this project:
 Ananya Purushottam (ap2626):
 I coded the majority of the CSS design changes, including the refreshed design for all the resource HTML pages. I also did several bug fixes, Github handling by reverting bad commits, and a lot of troubleshooting with regards to Javascript variable coordination. I also coded up all the navigation flow between resource and homepages, and implemented a timeout function to only switch screens if the user's hand was raised for 3 seconds to prevent immediate accidental screen switches. This was very challenging to do and debug, but very rewarding. I contributed to this `README.md` as well by explaining how to run our project, as well as troubleshooting tips, i.e. explicitly indiciating if there are any constraints from the deployment environment as mentioned in our rubric!
 
+
 Nicholas Ribeiro (njr43)
 I coded some of the CSS design as well as refined the logic for posture scoring, updating the overall posture score to take into consideration the intermediate scores for certain posture-related conditions. I also helped Ananya with screen navigation issues and worked a little on touching up this `README.md` as well. 
 
 
 Daniel Strode (das327)
-I worked on compiling all the research for our 2 main tasks and populating the resource pages of our website with what I found. I also worked a lot on this `README.md` file as well.
+I worked on compiling all the research for our 2 main tasks and populating the resource pages of our website with what I found. I also worked on creating a simple component-based scoring system (based on how certain keynodes deviated from a 0-slope line between y/z coordinates).  I also worked on this `README.md` file, writing *Introduction and Brief Description*, *Interacting with the Application*, *Modifying Project Files*, and *Dependencies*.
+
 
 Kaci Xie (kx36)
