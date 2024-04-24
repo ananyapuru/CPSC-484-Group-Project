@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             postureScore = ((postureScore * 3) + score_B + score_N) / 5;
                         }
 
-                        // postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100
+                        postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100
 
                         // Display the posture score percentage on the screen
                         console.log("hi");
