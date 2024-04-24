@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     
 
                     if (window.location.pathname === '/project/Group_27/standing.html') {
-                        console.log("Inside");
                         var postureScoreEl = document.getElementById('postureScore');
                         var neckScoreEl = document.getElementById('neckScore');
                         var backScoreEl = document.getElementById('backScore');
@@ -131,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         postureScore = Math.max(0, Math.min(100, postureScore)); // Clamp the score between 0 and 100
 
                         // Display the posture score percentage on the screen
-                        console.log("hi");
                         // var postureScoreElement = document.getElementById('postureScore');
                         // if (!postureScoreElement) {
                         //     postureScoreElement = document.createElement('div');
@@ -178,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             if (!frames.rightHandRaiseTimer) {
                                 frames.rightHandRaiseTimer = setTimeout(function() {
                                     if (frames.is_right_hand_raised(frames.get_closest_person(frames.lastFrame))) {
-                                        window.location.href = '/project/Group_27/';
+                                        window.location.href = '/project/Group_27/index.html';
                                     }
                                     frames.rightHandRaiseTimer = null;
                                 }, timerAmount); // 5 second delay
