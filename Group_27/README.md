@@ -201,3 +201,4 @@ I worked on compiling all the research for our 2 main tasks and populating the r
 
 
 Kaci Xie (kx36)
+I worked on design and this `README.md` file. I described the flow of our installation. I helped come up with design ideas and also helped Daniel do the posture research. I tried to implemented more aspects of our posture score, such as the back posture calculation, although it wasn't as accurate as I'd have liked. I also explained how we accomplished our tasks.
