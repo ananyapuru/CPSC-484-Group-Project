@@ -2,7 +2,7 @@
 ## Group 27
 ## CPSC 484/584
 
-## Introduction
+## Introduction and Brief Description
 
 This repository is for Group 27's final project for CPSC 484/584 (Introduction to Human-Computer Interaction). This project is titled "The Posture Doctor", and addresses the following problem space:
 
@@ -53,7 +53,7 @@ The goal of this project is to help Yalies identify any posture issues they may 
 - Without going into all the detail that is available on each of the 6 resource pages for each of the causes of poor posture, we highlight here a few exercises we recommend to users based on research, namely: chin tucks, deltoid-targeting weightlifting, hip flexor stretches, foam rolling etc.
 
 
-## Running the System Prototype
+## Running the System Prototype (How to run project)
 To run our project, you need:
 1. Terminal with Python3 installed.
 2. Web Browser (Google Chrome, Safari, Firefox, Vivaldi)
@@ -72,11 +72,12 @@ Steps:
 6. Press `cmd` and click on the http link. This should redirect you to the homepage of our application running on your default browser.
 7. Follow the on-screen instructions on TV 3 or your authorized TV and enjoy improving your posture! :D
 
-## Troubleshooting [Important]
-Note that our code ALWAYS works locally on our computer when tested (with users) in front of TV3 outside Davies Auditorium.
-However, sometimes due to problems with the TV or upload website, the TV display does not always display or reflect the most recently uploaded version of our project. Therefore, if the TV does not display a greeting message to the user when the user is in the vision of the sensor and/or recognize instruction responses such as the left hand being raised, we request you to look at the output on your browser rather than on the TV.
+## TROUBLESHOOTING AND DEPLOYMENT ENVIRONMENT CONSTRAINTS [Important]
+- Note that our code ALWAYS works locally on our computer when tested (with users) in front of TV3 outside Davies Auditorium.
+However, sometimes due to problems with the TV or upload website, the TV display does not always display or reflect the most recently uploaded version of our project. Therefore, if the TV does not display a greeting message to the user when the user is in the vision of the sensor and/or recognize instruction responses such as the left hand being raised, we request you to look at the output on your browser rather than on the TV. We promise you it works on the TV display, and we've spent DAYS testing it, but sometimes, with 0 changes to our code, the TV display just won't reflect the most up-to-date version of the code we uploaded. We are sorry for any inconvenience this causes and sincerely request that this does not negatively impact our grade as the display not reflecting the most recent code we've uploaded is not in our control :(
+- Physical constraints on where the user should stand will be made explicit by our on-screen instructions! The user will be told if they are too close or too far away. If there are multiple users in the screen, our installation automatically recognizes the closest person!
 
-## How to Use
+## How to interact with application
 
 You can find *The Posture Doctor* at TV 3, in front of Davies Auditorium. If another user isn't already interacting with *The Posture Doctor*, you will see a welcome screen that provides a quirky greeting and an option to analyze your posture when the left hand is raised. After raising your left hand, the analysis occurs as follows:
 
@@ -200,7 +201,7 @@ Some physical constraints to consider when implementing the project:
 ## Contributors
 
 Ananya Purushottam (ap2626):
-I coded all the CSS design changes, including the refreshed design for all the resource HTML pages. I also did several bug fixes, Github handling by reverting bad commits, and a lot of troubleshooting with regards to Javascript variable coordination. I also coded up all the navigation flow between resource and homepages, and implemented a timeout function to only switch screens if the user's hand was raised for 3 seconds to prevent immediate accidental screen switches. This was very challenging to do and debug, but very rewarding.
+I coded all the CSS design changes, including the refreshed design for all the resource HTML pages. I also did several bug fixes, Github handling by reverting bad commits, and a lot of troubleshooting with regards to Javascript variable coordination. I also coded up all the navigation flow between resource and homepages, and implemented a timeout function to only switch screens if the user's hand was raised for 3 seconds to prevent immediate accidental screen switches. This was very challenging to do and debug, but very rewarding. I contributed to this `README.md` as well by explaining how to run our project, as well as troubleshooting tips, i.e. explicitly indiciating if there are any constraints from the deployment environment as mentioned in our rubric!
 
 Nicholas Ribeiro (njr43)
 
