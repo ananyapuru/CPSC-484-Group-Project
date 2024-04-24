@@ -719,3 +719,9 @@ a span.rounded:hover {
 .green-text {
     color: green;
 }
+
+#errorDisplay, #errorDisplay1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: red;
+}

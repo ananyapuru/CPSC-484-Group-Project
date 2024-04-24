@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     frames.currentIndex = (frames.currentIndex + 1) % frames.posturePages.length;
                     var nextPosturePage = frames.posturePages[frames.currentIndex];
                     window.location.href = nextPosturePage;
-                }, 3000); // Change page every 5 seconds
+                }, 7000); // Change page every 7 seconds
             }
         }
     };
