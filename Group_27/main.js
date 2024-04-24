@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 frames.show(frames.lastFrame);
                 
                 var people = frames.get_num_people(frames.lastFrame);
-                // document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
+                document.getElementById('peopleCount').innerText = "Number of people detected: " + people;
 
                 console.log(window.location.pathname);
                 
@@ -173,7 +173,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
 
                     else if(window.location.pathname === '/resources.html' || window.location.pathname === 'forward_head_posture.html'){
-                        console.log("Hello");
                         if (rightHandRaised) {
                             if (!frames.rightHandRaiseTimer) {
                                 frames.rightHandRaiseTimer = setTimeout(function() {
@@ -187,8 +186,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             clearTimeout(frames.rightHandRaiseTimer);
                             frames.rightHandRaiseTimer = null;
                         }
-
-                        console.log("Slideshow starting??");
+                        setTimeout(function() {}, 5000);
                         frames.handlePosturePageSlideshow();
                     }
                 }
@@ -233,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     frames.currentIndex = (frames.currentIndex + 1) % frames.posturePages.length;
                     var nextPosturePage = frames.posturePages[frames.currentIndex];
                     window.location.href = nextPosturePage;
-                }, 1000); // Change page every 10 seconds
+                }, 5000); // Change page every 10 seconds
             }
         }
     };

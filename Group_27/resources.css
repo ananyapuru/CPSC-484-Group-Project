@@ -144,3 +144,22 @@ ul {
     padding-left: 0; /* Remove default padding */
     list-style-position: inside; /* Ensures bullets align within the content area */
 }
+
+/* Additional Elements */
+#peopleCount, #leftHandRaised, #rightHandRaised, #bothHandsRaised {
+    font-size: 25px; /* Sizing for visibility */
+    margin: 10px 0; /* Spacing */
+}
+
+/* Footer styling to ensure it is at the bottom */
+.status-footer {
+    width: 50%; /* Full width to align with the page */
+    text-align: center; /* Center the text inside the footer */
+    margin-top: 10%;
+    padding-top: 50px;
+    padding: 20px 0; /* Add some padding for spacing */
+    position: absolute; /* Position relative will ensure it flows naturally after .absolute */
+    bottom: 0; /* Aligns to the bottom of its parent if needed */
+    clear: both; /* Clears the preceding floats if any */
+}
+
